@@ -1,0 +1,10 @@
+services:
+  api:
+    command: uvicorn src.main:main_app --host 0.0.0.0 --port 8000 --workers 4
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-boilerplate}
+    env_file:
+      - .env.prod
+    ports:
+      - "8000:8000"
+    restart: always

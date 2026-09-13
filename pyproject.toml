@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "fastapi-multiapp-boilerplate"
+version = "0.1.0"
+description = "A FastAPI multi-application boilerplate with administrator and users apps"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{ include = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+uvicorn = { extras = ["standard"], version = "^0.34.0" }
+sqlalchemy = "^2.0.36"
+psycopg2-binary = "^2.9.9"
+alembic = "^1.14.0"
+pydantic = "^2.10.0"
+pydantic-settings = "^2.7.0"
+PyJWT = "^2.10.1"
+passlib = "1.7.4"
+bcrypt = "4.0.1"
+python-multipart = "^0.0.20"
+email-validator = "^2.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+httpx = "^0.28.1"
+pytest-cov = "^6.0.0"
+ruff = "^0.8.6"
+mypy = "^1.14.1"
+
+[tool.poetry.scripts]
+dev = "uvicorn src.main:main_app --reload"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["B008", "B904"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
