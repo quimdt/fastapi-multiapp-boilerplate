@@ -13,7 +13,6 @@ htmlcov
 .env.prod
 .env.test
 *.log
-tests
 docker-compose*.yaml
 Dockerfile
 README.md
