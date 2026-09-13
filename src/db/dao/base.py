@@ -24,7 +24,7 @@ class BaseDAO:
 
     def get_value_by_id(self, table: Table, id: uuid.UUID):
         try:
-            value = self.db.query(table).get(id)
+            value = self.db.get(table, id)
         except NoResultFound:
             raise NotFound()
         if value is None:

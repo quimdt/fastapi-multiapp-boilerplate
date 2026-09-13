@@ -1,11 +1,11 @@
 from datetime import UTC, datetime, timedelta
 from typing import Annotated
 
+import bcrypt
 import jwt
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from jwt.exceptions import InvalidTokenError
-from passlib.context import CryptContext
 from pydantic import ValidationError
 
 from src.apps.administrator.dependencies import get_dao
@@ -17,8 +17,6 @@ from src.settings import settings
 
 ALGORITHM = "HS256"
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="api/v1/login",
     scopes={"me:read": "Read users."},
@@ -27,12 +25,17 @@ oauth2_scheme = OAuth2PasswordBearer(
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify that a plain password matches a given hashed password."""
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return bcrypt.checkpw(
+            plain_password.encode("utf-8"), hashed_password.encode("utf-8")
+        )
+    except ValueError:
+        return False
 
 
 def get_password_hash(password: str) -> str:
     """Hash a plain password."""
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def authenticate_user(dao: BaseDAO, email: str, password: str) -> UserSQLModel:

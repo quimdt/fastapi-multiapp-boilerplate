@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
     app_name: str = "FastAPI Boilerplate"
     api_version: str = "v1"
-    secret_key: str = "change-me-in-production"
+    secret_key: str = "change-me-in-production-change-me-in-production"
     access_token_expire_minutes: int = 43200
     database_url: str = (
         "postgresql+psycopg2://postgres:postgres@localhost:5432/boilerplate"
