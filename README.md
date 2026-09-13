@@ -5,6 +5,8 @@ multiple mounted sub-applications. Each sub-app lives under `src/apps/`, has its
 own routers, auth, DAOs and schemas, and is mounted on a different URL path of a
 single "main" app.
 
+Licensed under the [MIT License](LICENSE).
+
 ## Features
 
 - Multi-app architecture (see [Structure](#structure)).
